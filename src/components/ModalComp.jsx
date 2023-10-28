@@ -14,32 +14,41 @@ import {
 } from "@chakra-ui/react"
 import { useState } from "react"
 
+// Componente ModalComp que recebe algumas props
 const ModalComp = ({ data, setData, dataEdit, isOpen, onClose }) => {
+
+  // Inicializa estados locais para 'name' e 'email' com valores padrão do 'dataEdit'
   const [name, setName] = useState(dataEdit.name || "")
   const [email, setEmail] = useState(dataEdit.email || "")
 
+  // Função para lidar com o salvamento dos dados
   const handleSave = () => {
-    if (!name || !email) return;
+    if (!name || !email) return; // Verifica se 'name' e 'email' estão preenchidos
 
+    // Verifica se o email já existe nos dados
     if (emailAlreadyExists()) {
       return alert("E-mail já cadastrado")
     }
 
+    // Atualiza os dados existentes ou cria um novo item com 'name' e 'email'
     if (Object.keys(dataEdit).length) {
       data[dataEdit.index] = { name, email }
     }
 
+    // Cria um novo array de dados e o armazena no armazenamento local
     const newDataArray = !Object.keys(dataEdit).length
       ? [...(data ? data : []), { name, email }]
       : [...(data ? data : [])]
 
     localStorage.setItem("cad_cliente", JSON.stringify(newDataArray))
 
+    // Atualiza os dados e fecha o modal
     setData(newDataArray)
     onClose()
 
   }
 
+  // Função para verificar se o email já existe nos dados
   const emailAlreadyExists = () => {
     if (dataEdit.email !== email && data?.length) {
       return data.find((item) => item.email === email)

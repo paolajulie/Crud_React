@@ -20,7 +20,7 @@ import ModalComp from "./components/ModalComp";
 
 
 const App = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure()  // UseDisclosure é um hook do Chakra UI para gerenciar o estado de abrir/fechar modais
   const [data, setData] = useState([])
   const [dataEdit, setDataEdit] = useState({})
 
@@ -30,6 +30,7 @@ const App = () => {
     lg: false,
   })
 
+  // Hook useEffect para carregar os dados dos clientes do armazenamento local
   useEffect(() => {
     const db_costumer = localStorage.getItem("cad_cliente")
       ? JSON.parse(localStorage.getItem("cad_cliente"))
@@ -82,7 +83,7 @@ const App = () => {
             </Thead>
             <Tbody  >
               {data.map(({ name, email }, index) => (
-                <Tr key={index} cursor="pointer" _hover={{ bg: "gray.100" }}>
+                <Tr style-sh border-bottom key={index} cursor="pointer" _hover={{ bg: "gray.100" }}>
                   < Td maxW={isMobile ? 5 : 100}>{name}</Td>
                   <Td maxW={isMobile ? 5 : 100}>{email}</Td>
                   <Td p={0}>
